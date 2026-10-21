@@ -1,0 +1,13 @@
+﻿indicador,antes,despues,cambio
+Registros,2539891,2539734,-157.0
+Columnas,23,38,15.0
+Celdas nulas (explícitas),0,0,0.0
+Nulos disfrazados,1580645,0,-1580645.0
+Filas duplicadas exactas,0,0,0.0
+Filas con identificador repetido,,,
+Memoria (MB),126.4,312.5,186.1
+Reglas evaluadas,14,14,0.0
+Reglas que no cumplen,5,0,-5.0
+Registros que incumplen ≥ 1 regla,2539891,2158,-2537733.0
+Variables nuevas,,"anio, brecha_usura_pp, es_atipico_montos_desembolsados, es_monto_irrisorio, es_tasa_cero, grupo_entidad, id_entidad, mes, modalidad_usura, monto_promedio_credito, nombre_mes, rango_monto_min_smlmv, supera_usura, tasa_usura_vigente, trimestre",15
+Columnas eliminadas,,,0

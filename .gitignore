@@ -1,0 +1,12 @@
+# Local source data and large generated datasets
+/*.csv
+/datos/crudos/*
+!/datos/crudos/.gitkeep
+/salidas/dataset_curado.csv
+
+# Python and Jupyter local files
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/

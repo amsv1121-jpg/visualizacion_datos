@@ -1,0 +1,41 @@
+﻿orden,paso,columna,accion,justificacion,afectados
+1,Nombres,(todas),Nombres estandarizados a snake_case sin tildes,"Nombres homogéneos evitan errores en Python, DAX y Power Query",23
+2,Alcance,(filas),Muestra aleatoria del 22% de cada bloque (semilla 42): 2.539.891 de 11.544.961 filas,"El archivo completo (3,69 GB) no cabe en la RAM de un computador de 8–16 GB; una muestra aleatoria por bloque conserva todas las semanas, entidades y tipos de crédito en su proporción",9005070
+3,Texto,(texto),Espacios extremos y dobles eliminados,Espacios invisibles generan categorías y duplicados falsos,10564
+4,Nulos,(texto),"Nulos disfrazados ('N/A', 'SIN DATO', 'Sin información (1)') convertidos a nulo explícito",Un marcador de ausencia no es un dato: debe contarse como faltante,1580645
+5,Nulos,(texto),'No aplica' / 'No aplica(1)' se conservan como categoría (no se convierten en nulo),"Se verificó en el portal que 'No aplica' en sexo y grupo étnico coincide exactamente con las personas jurídicas (1.005.014 filas), y en tamaño/antigüedad con las personas naturales sin empresa: es una categoría estructural, no un dato faltante.",4822662
+6,Duplicados,(filas),Filas duplicadas exactas eliminadas,Copias idénticas inflan conteos y totales,0
+7,Tipos,montos_desembolsados,Texto con coma de miles → número (2.537.710 valores con separador; 0 no convertibles → nulo),El CSV exportado trae los montos con coma de miles; como texto no se pueden sumar (preguntas 2 y 4).,2537710
+8,Tipos,numero_de_creditos_desembolsados,Texto con coma de miles → número (4.436 valores con separador; 0 no convertibles → nulo),"Los valores mayores a 999 traen coma de miles ('1,234'); se requieren como entero para el monto promedio (pregunta 4).",4436
+9,Tipos,codigo_municipio,Código como texto de 5 dígitos (ceros a la izquierda restituidos),DIVIPOLA tiene 5 dígitos; sin el cero inicial Antioquia (05) no cruza con tablas del DANE.,0
+10,Tipos,codigo_ciiu,Código como texto de 4 dígitos (ceros a la izquierda restituidos),"CIIU tiene 4 dígitos; 0010, 0020 y 0090 son códigos de personas naturales que se perderían como número.",0
+11,Fechas,fecha_corte,Texto → fecha (0 no convertibles → nulo),Texto dd/mm/aaaa; se convierte a fecha para la tabla Calendario y la serie semanal (pregunta 3).,2539891
+12,Fechas,fecha_corte,Fechas posteriores al corte (2026-10-07) → nulo,Un registro no puede tener fecha posterior a la descarga,0
+13,Categorías,antiguedad_de_la_empresa,Variantes unificadas en 4 valores oficiales,'No aplica(1)' y 'No aplica' significan lo mismo que en tamaño de empresa; se unifica la etiqueta y la capitalización.,2484845
+14,Categorías,grupo_etnico,Variantes unificadas en 7 valores oficiales,Corrige la tilde errónea ('Gítano') y el espacio antes de '(a)' para unificar la escritura de las etiquetas oficiales.,952
+15,Categorías,tipo_de_credito,Variantes unificadas en 7 valores oficiales,Ortografía de la modalidad (pregunta 3 filtra por tesorería).,269
+16,Categorías,tipo_de_garantia,Variantes unificadas en 5 valores oficiales,Ortografía consistente con las demás garantías ('Garantía …').,2485638
+17,Categorías,rango_monto_desembolsado,Forma canónica: 42 → 33 valores distintos,Las entidades escriben el mismo rango con y sin ' y ' ('… SMLMV menor o igual …'); una sola forma evita barras duplicadas.,471916
+18,Inválidos,tasa_efectiva_promedio_ponderada,"Fuera de [0, 100] → nulo",Una tasa E.A. fuera de 0–100 % no es posible; 0 % sí es válido (compras a una cuota).,0
+19,Inválidos,montos_desembolsados,"Fuera de [1, None] → nulo","Un desembolso menor a $1 (p. ej. 0,01) no existe en pesos colombianos.",157
+20,Inválidos,numero_de_creditos_desembolsados,"Fuera de [1, None] → nulo",Cada fila agrupa al menos un crédito desembolsado.,0
+21,Nulos,grupo_etnico,Nulos → 'Sin información','Sin información (1)' es ausencia real del dato; se hace visible como categoría en los filtros de Power BI.,1580645
+22,Nulos,fecha_corte,Filas sin este dato eliminadas,Sin fecha la fila no entra en la serie semanal ni en el cálculo de la usura vigente.,0
+23,Nulos,montos_desembolsados,Filas sin este dato eliminadas,Sin monto válido la fila no aporta a participación (P2) ni a monto promedio (P4).,157
+24,Nulos,numero_de_creditos_desembolsados,Filas sin este dato eliminadas,Sin número de créditos no se puede calcular el monto promedio (P4).,0
+25,Nulos,tasa_efectiva_promedio_ponderada,Filas sin este dato eliminadas,"La tasa es la medida central de las preguntas 1, 3 y 5.",0
+26,Atípicos,es_atipico_montos_desembolsados,Marcados (IQR × 3 sobre log10); no se eliminan,"Los montos van de miles a billones de pesos (sesgo extremo); en escala log10 el IQR identifica los extremos reales (p. ej. 1,2 billones a Gobierno) sin marcar media base. Se marcan, no se eliminan.",699
+27,Calendario,anio,Derivada de fecha_corte,Facilita filtros y agrupaciones temporales,2539734
+28,Calendario,trimestre,Derivada de fecha_corte,Facilita filtros y agrupaciones temporales,2539734
+29,Calendario,mes,Derivada de fecha_corte,Facilita filtros y agrupaciones temporales,2539734
+30,Calendario,nombre_mes,Derivada de fecha_corte,Facilita filtros y agrupaciones temporales,2539734
+31,Variables propias,id_entidad,Clave tipo_entidad-codigo_entidad,codigo_entidad se repite entre tipos de entidad; la dimensión Entidad de Power BI necesita una clave única,54
+32,Variables propias,grupo_entidad,Tipo de entidad agrupado en 5 grupos con nombre de negocio,Responde la pregunta 2 (participación de bancos frente a cooperativas y financieras),2539734
+33,Variables propias,monto_promedio_credito,montos_desembolsados / numero_de_creditos_desembolsados,Responde la pregunta 4; en Power BI el promedio agregado se calcula como medida SUM/SUM,2539734
+34,Variables propias,es_tasa_cero,True si la tasa es 0 % (compras a una cuota sin interés),Incluir el 0 % en el promedio subestima el costo real del crédito (preguntas 1 y 3),563103
+35,Variables propias,tasa_usura_vigente,Usura certificada (% E.A.) según modalidad y semana de corte,Responde la pregunta 5 con una referencia externa verificable (resoluciones SFC),2539734
+36,Variables propias,brecha_usura_pp,"Usura vigente − tasa cobrada, en puntos porcentuales",Mide qué tan cerca del límite legal presta cada entidad (pregunta 5),2539734
+37,Variables propias,supera_usura,True si la tasa supera la usura vigente,Aísla las filas que requieren alerta antes de llegar a la gerencia (pregunta 5),0
+38,Variables propias,es_monto_irrisorio,True si el monto promedio por crédito es < $1.000,"Aísla montos que no corresponden a un desembolso real (pregunta 5, regla R14)",2158
+39,Variables propias,rango_monto_min_smlmv,Límite inferior del rango en SMLMV,Permite ordenar los rangos de menor a mayor (en texto 'Mayor a 12' quedaría antes que 'Mayor a 3'),2539734
+40,Tipos finales,(todas),Texto repetitivo → category; enteros reducidos,Reduce memoria y acelera la carga en Power BI,38
